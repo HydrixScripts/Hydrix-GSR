@@ -1,4 +1,3 @@
-Config = {
     Config = {}
 
     -- Time in seconds before GSR residue is automatically cleaned off
