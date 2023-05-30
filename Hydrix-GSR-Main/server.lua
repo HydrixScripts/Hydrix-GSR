@@ -38,6 +38,48 @@ AddEventHandler("GSR:ForceClean", function ()
 
 end)
 
+QBCore.Commands.Add(Config.TestGSR, "Test for GSR on nearby players.", {}, false, function(source, args)
+    local playerCoords = GetEntityCoords(plyPed)
+    QBCore.Functions.TriggerCallback('GSR:PlayerTest', function(result)
+        if result then
+            QBCore.Functions.Notify("GSR detected!", "error")
+        else
+            QBCore.Functions.Notify("No GSR detected.", "success")
+        end
+    end, playerCoords, gsrTestDistance)
+end)
+
+QBCore.Commands.Add(Config.cleargsr, "Clean GSR residue.", {}, false, function(source, args)
+    if gsrPositive then
+        QBCore.Functions.Notify("Cleaning...", "inform")
+        Citizen.Wait(10000)
+        local chance = math.random(1, 3)
+        if chance ~= 1 then
+            QBCore.Functions.Notify("Success! Residue was cleaned off.", "success")
+            gsrTimer = 0
+            gsrPositive = false
+        else
+            QBCore.Functions.Notify("Failed! Residue was not cleaned off.", "error")
+            gsrTimer = Config.GSRAutoClean
+            Citizen.CreateThread(GSRThreadTimer)
+        end
+    end
+end)
+
+QBCore.Commands.Add(Config.forceclean, "Force clean GSR residue.", {}, false, function(source, args)
+    QBCore.Functions.TriggerServerCallback("GSR:PermCheck", function(result)
+        if result then
+            QBCore.Functions.Notify("Success! Residue was cleaned off.", "success")
+            gsrTimer = 0
+            gsrPositive = false
+            TriggerServerEvent("GSR:ForceClean")
+        else
+            QBCore.Functions.Notify("Failed! You do not have permission to do that!", "error")
+        end
+    end)
+end)
+
+
 function sendToDisc(title, message)
     local embed = {}
     embed = {
