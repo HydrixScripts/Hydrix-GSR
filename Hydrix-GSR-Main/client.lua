@@ -4,6 +4,7 @@ local gsrPositive = false
 local plyPed = PlayerPedId()
 local gsrTestDistance = 5
 local Commands = {}
+local tick = nil
 
 
 Citizen.CreateThread(function()
