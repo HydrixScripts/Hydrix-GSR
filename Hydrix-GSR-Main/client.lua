@@ -37,7 +37,79 @@ Citizen.CreateThread(function()
     end
 end)
 
+RegisterNetEvent("GSR:PlayerTest")
+AddEventHandler("GSR:PlayerTest", function(tested)
+    TriggerClientEvent("GSR:TestHandler", tested, source)
+end)
 
+RegisterNetEvent("GSR:TestCallback")
+AddEventHandler("GSR:TestCallback", function(tester, result)
+    if result then
+        QBCore.Functions.Notify("~w~Subject Tested ~r~Positive ~w~for ~b~gun shot residue", "error", tester)
+    else
+        QBCore.Functions.Notify("~w~Subject Tested ~g~Negative ~w~for ~b~gun shot residue", "success", tester)
+    end
+end)
+
+RegisterNetEvent('GSR:CheckPerms')
+AddEventHandler("GSR:CheckPerms", function()
+    local source = source -- Get the source of the event
+    local permissionSystem = Config.PermissionSystem -- Get the configured permission system from the config
+
+    if permissionSystem == "ox_lib" then
+        if exports.ox_lib:HasPermission(source, Config.Perms.forceperm) then
+            TriggerClientEvent('GSR:PermsResponse', source, true)
+        else
+            TriggerClientEvent('GSR:PermsResponse', source, false)
+        end
+    elseif permissionSystem == "qb-admin" then
+        if exports['qb-admin']:IsPlayerAceAllowed(source, Config.Perms.forceperm) then
+            TriggerClientEvent('GSR:PermsResponse', source, true)
+        else
+            TriggerClientEvent('GSR:PermsResponse', source, false)
+        end
+    else
+        -- Handle the case when an unsupported permission system is configured
+        TriggerClientEvent('GSR:PermsResponse', source, false)
+    end
+end)
+
+RegisterNetEvent("GSR:ForceClean")
+AddEventHandler("GSR:ForceClean", function ()
+    local id = source;
+    local ids = ExtractIdentifiers(id);
+    local steam = ids.steam:gsub("steam:", "");
+    local steamDec = tostring(tonumber(steam,16));
+    steam = "https://steamcommunity.com/profiles/" .. steamDec;
+    local discord = ids.discord; 
+    sendToDisc("" .. GetPlayerName(source) .. " used the `/forcewh` command ", 
+    'Steam: **' .. steam .. '**\n' ..
+    'Discord Tag: ** <@' .. discord:gsub('discord:', '') .. '> **\n' ..
+    'Discord UID: **' .. discord:gsub('discord:', '') .. '**\n');
+
+end)
+
+
+-- Define your cleanup function
+local function cleanup()
+    local currentTime = tick()
+    for k, v in pairs(GSRTab) do
+        if currentTime - v >= Config.GSRAutoClean then
+            GSRTab[k] = nil
+        end
+    end
+end
+
+-- Function to repeatedly run the cleanup function
+local function runCleanup()
+    while true do
+        cleanup()
+        wait(60) -- Pause the script execution for 60 seconds
+    end
+end
+
+-- Start running the cleanup function
+runCleanup()
 RegisterNetEvent("GSR:Not1fy")
 AddEventHandler("GSR:Not1fy", function(notHandler)
     QBCore.Functions.Notify(notHandler, "inform")
