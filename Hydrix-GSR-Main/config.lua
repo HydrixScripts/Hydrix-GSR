@@ -6,17 +6,8 @@ Config.GSRAutoClean = 60
 -- Distance in meters for testing GSR on other players
 Config.GSRTestDistance = 5.0
 
--- Chat command for testing GSR on other players
-Config.TestGSRCommand = 'testgsr'
-
--- Chat command for manually cleaning off GSR residue
-Config.CleanGSRCommand = 'cleargsr'
-
 -- Chat command for forcing a GSR clean for all players (requires permission check)
 Config.ForceCleanCommand = 'forcecleangs'
-
--- Permission required to use the force clean command
-Config.ForceCleanPermission = 'gsr.forceclean'
 
 -- Restrict access to the force clean command to players with the permission above
 Config.RestrictForceClean = true
@@ -28,9 +19,22 @@ Config.NotificationPrefix = '^5[Sloth_GSR]^7 '
 Config.Debug = false
 Perms = {
     restricted = true, -- Would you like to restrict the forceclean to a ace perm?
-    forceperm = 'GSR:ForceClean', -- Ace perm to be able to force clean
+    forceperm = 'qbcore.god', -- Ace perm to be able to force clean
 }
 Logging = {
     enabled = true, -- Enable logging of forceclean
-    webhook = 'https://discord.com/api/webhooks/981008260771512400/no_mHnWnW19_R01gPMLM_RJzluX5eqgXevcWTNnKc0W4yWC6-lWZP5wLcx-APH_I8Hlw' -- Discord webhook URL
+    webhook = '' -- Discord webhook URL
 }
+
+
+Config = {
+    NotifySubject = true, -- Set this to false if you want the person being tested to get a chat notification that they are being tested
+    EnableCleanGSR = true, -- Set this to false if you don't want people to be able to clean GSR off them
+    GSRAutoClean = 900, -- (IN SECONDS) Amount Of Time Before GSR Auto Cleans [Default Is 15 Minutes]
+    GSRTestDistance = 3, -- Maximum Distance That You Can Be To Test For GSR
+    TestGSR = "gsr", -- Command To Test For GSR
+    CleanGSR = "cleangsr", -- Command To Clean GSR
+}
+
+-- Table to store GSR data
+GSRTab = {}
