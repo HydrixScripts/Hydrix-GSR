@@ -1,8 +1,5 @@
-Config = {}
-
--- Time in seconds before GSR residue is automatically cleaned off
-Config.GSRAutoClean = 60
-
+Config = {
+    
 -- Distance in meters for testing GSR on other players
 Config.GSRTestDistance = 5.0
 
@@ -24,10 +21,6 @@ Perms = {
 Logging = {
     enabled = true, -- Enable logging of forceclean
     webhook = '' -- Discord webhook URL
-}
-
-
-Config = {
     NotifySubject = true, -- Set this to false if you want the person being tested to get a chat notification that they are being tested
     EnableCleanGSR = true, -- Set this to false if you don't want people to be able to clean GSR off them
     GSRAutoClean = 900, -- (IN SECONDS) Amount Of Time Before GSR Auto Cleans [Default Is 15 Minutes]
