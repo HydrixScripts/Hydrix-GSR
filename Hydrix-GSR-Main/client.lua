@@ -48,7 +48,7 @@ AddEventHandler("GSR:TestCallback", function(tester, result)
     if result then
          TriggerClientEvent('chat:addMessage', _source, {args = {"System", "Player has GSR!"}})
     else
-        QBCore.Functions.Notify("~w~Subject Tested ~g~Negative ~w~for ~b~gun shot residue", "success", tester)
+        TriggerClientEvent('chat:addMessage', _source, {args = {"System", "Player doesn't have GSR."}})
     end
 end)
 
