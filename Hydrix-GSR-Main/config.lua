@@ -3,6 +3,8 @@ Config = {
 -- Distance in meters for testing GSR on other players
 Config.GSRTestDistance = 5.0
 
+Config.PermissionSystem = 'qb-admin'
+
 -- Chat command for forcing a GSR clean for all players (requires permission check)
 Config.ForceCleanCommand = 'forcecleangs'
 
