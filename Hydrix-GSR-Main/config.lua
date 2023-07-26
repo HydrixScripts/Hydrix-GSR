@@ -16,10 +16,11 @@ Config.NotificationPrefix = '^5[Sloth_GSR]^7 '
 
 -- Debug mode (prints extra information to console)
 Config.Debug = false
-Perms = {
+Config.Perms = {
     restricted = true, -- Would you like to restrict the forceclean to a ace perm?
     forceperm = 'qbcore.god', -- Ace perm to be able to force clean
 }
+    
 Logging = {
     enabled = true, -- Enable logging of forceclean
     webhook = '' -- Discord webhook URL
